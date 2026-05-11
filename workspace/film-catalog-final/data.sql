@@ -1,0 +1,1 @@
+INSERT INTO admin (email, name, salt, password) VALUES ('omwa5410@gmail.com', 'Ori', '6142708c4688a560a528815b0075408d', 'cbb50770b7a5e9aefd45c45f422179aa1b2479230eeff970460fb4be17b31122');

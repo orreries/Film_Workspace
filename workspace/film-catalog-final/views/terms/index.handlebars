@@ -1,0 +1,8 @@
+<h1>Terms</h1>
+<a href="/terms/form">Add a new term</a>
+{{#each terms}}
+<li>
+  {{this.id}} - {{this.lexicalItem}} {{this.definition}}
+  <a href="/terms/edit?id={{this.id}}">edit</a>
+</li>
+{{/each}}

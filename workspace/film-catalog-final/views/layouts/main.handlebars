@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <title>{{title}}</title>
+  </head>
+  <body>
+    {{#if flash}}
+      <div>
+        <strong>{{flash.intro}}</strong> {{{flash.message}}}
+      </div>
+    {{/if}}
+    <nav>
+      <ul>
+        <li><a href="/">About</a></li>
+        <li><a href="/films">Film Catalog</a></li>
+        {{#if currentUser}}
+          <li>
+              Welcome {{currentUser.name}}
+          </li>
+          <li>
+            <form action="/admin/logout" role="form" method="post">
+              <input type="hidden" name="_csrf" value="{{_csrfToken}}">
+              <button type="submit" class="btn">Logout</button>
+            </form>
+          </li>
+        {{else}}
+          <li>
+            <a href="/admin/login">Login</a>
+          </li>
+        {{/if}}
+      </ul>
+    </nav>
+    {{{body}}}
+  </body>
+</html>
