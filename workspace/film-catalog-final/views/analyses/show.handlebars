@@ -18,28 +18,30 @@
         <th>Context Example</th>
         <th>Notes</th>
       </tr>
-{{#each findings}}
-  <tr>
-    <td>{{this.lexicalItem}}</td>
-    <td>{{this.definition}}</td>
-    <td>
-      {{#if @root.currentUser}}
-        <form action="/analysis_findings/upsert" method="post" role="form">
-          <input type="hidden" name="_csrf" value="{{@root._csrfToken}}">
-          <input type="hidden" name="id" value="{{this.id}}">
-          <input type="number" name="frequency" value="{{this.frequency}}" style="width:60px">
-          <input type="text" name="contextExample" value="{{this.contextExample}}" placeholder="context example">
-          <input type="text" name="notes" value="{{this.notes}}" placeholder="notes">
-          <button type="submit">Save</button>
-        </form>
-      {{else}}
-        {{this.frequency}}
-      {{/if}}
-    </td>
-    <td>{{#unless @root.currentUser}}{{this.contextExample}}{{/unless}}</td>
-    <td>{{#unless @root.currentUser}}{{this.notes}}{{/unless}}</td>
-  </tr>
-{{/each}}
+      {{#each findings}}
+        <tr>
+          <td>{{this.lexicalItem}}</td>
+          <td>{{this.definition}}</td>
+          <td>
+            {{#if @root.currentUser}}
+              <form action="/analysis_findings/upsert" method="post" role="form">
+                <input type="hidden" name="_csrf" value="{{@root._csrfToken}}">
+                <input type="hidden" name="id" value="{{this.id}}">
+                <input type="hidden" name="analysisId" value="{{@root.analysis.id}}">
+                <input type="number" name="frequency" value="{{this.frequency}}" style="width:60px">
+                <input type="text" name="contextExample" value="{{this.contextExample}}" placeholder="context example">
+                <input type="text" name="notes" value="{{this.notes}}" placeholder="notes">
+                <button type="submit">Save</button>
+              </form>
+            {{else}}
+              {{this.frequency}}
+            {{/if}}
+          </td>
+          {{!-- making it so that the admin only sees the prepopulated context ex and notes field --}}
+          <td>{{#unless @root.currentUser}}{{this.contextExample}}{{/unless}}</td>
+          <td>{{#unless @root.currentUser}}{{this.notes}}{{/unless}}</td>
+        </tr>
+      {{/each}}
     </table>
   {{else}}
     <p>No findings recorded for this analysis yet.</p>

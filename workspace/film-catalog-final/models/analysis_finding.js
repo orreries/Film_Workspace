@@ -16,7 +16,7 @@ exports.get = async (analysisId, termId) => {
 // joins the analysis to terms to pull the lexical items and definitions alongside the finding data
 exports.allForAnalysis = async (analysis) => {
   const { rows } = await db.getPool().query(
-    `select terms.lexical_item, terms.definition, analysis_findings.frequency, analysis_findings.context_example, analysis_findings.notes
+    `select analysis_findings.id, terms.lexical_item, terms.definition, analysis_findings.frequency, analysis_findings.context_example, analysis_findings.notes
     from analysis_findings
     join terms on terms.id = analysis_findings.term_id
     where analysis_id = $1`,
@@ -26,8 +26,8 @@ exports.allForAnalysis = async (analysis) => {
 
 exports.update = async (finding) => {
   await db.getPool().query(
-    "update analysis_findings set term_id = $1, frequency = $2, context_example = $3, notes = $4 where id = $5;",
-    [finding.termId, finding.frequency, finding.contextExample, finding.notes, finding.id]);
+    "update analysis_findings set frequency = $1, context_example = $2, notes = $3 where id = $4;",
+    [finding.frequency, finding.contextExample, finding.notes, finding.id]);
 }
 
 exports.upsert = async (finding) => {

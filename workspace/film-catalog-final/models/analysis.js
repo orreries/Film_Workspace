@@ -6,9 +6,7 @@ const db = require('../database')
 
 const addFindingsToAnalysis = async (analysis, findingIds) => {
   if (!findingIds || findingIds.length === 0) return;
-  console.log('findingIds:', findingIds);
   findingIds.forEach(async findingId => {
-    console.log('findingId:', findingId);
     await db.getPool().query(
       "insert into analysis_findings (analysis_id, term_id) values ($1, $2);",
       [analysis.id, findingId]
@@ -30,7 +28,7 @@ exports.get = async (id) => {
 exports.add = async (analysis) => {
   const { rows } = await db.getPool().query(
     "insert into analyses (film_id, user_id, analysis_date, notes) values ($1, $2, $3, $4) RETURNING *;",
-    [analysis.filmId, analysis.userId, analysis.analysisDate || null, analysis.notes]);
+    [analysis.filmId, analysis.userId || null, analysis.analysisDate || null, analysis.notes]);
   let newAnalysis = db.camelize(rows)[0];
   addFindingsToAnalysis(newAnalysis, analysis.findingIds);
   return newAnalysis;
@@ -39,7 +37,7 @@ exports.add = async (analysis) => {
 exports.update = async (analysis) => {
   const { rows } = await db.getPool().query(
     "update analyses set film_id = $1, user_id = $2, analysis_date = $3, notes = $4 where id = $5 RETURNING *;",
-    [analysis.filmId, analysis.userId, analysis.analysisDate || null, analysis.notes, analysis.id]);
+    [analysis.filmId, analysis.userId || null, analysis.analysisDate || null, analysis.notes, analysis.id]);
   let newAnalysis = db.camelize(rows)[0];
   deleteFindingsForAnalysis(newAnalysis);
   addFindingsToAnalysis(newAnalysis, analysis.findingIds);

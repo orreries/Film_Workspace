@@ -36,7 +36,8 @@ router.get('/show/:id', async (req, res, next) => {
   var templateVars = {
     title: 'The Film Catalog || Films',
     film: film,
-    analyses: await Analysis.allForFilm(film)
+    analyses: await Analysis.allForFilm(film),
+    currentUser: req.session.currentUser
   }
   res.render('films/show', templateVars);
 });

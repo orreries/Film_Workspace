@@ -5,6 +5,8 @@ const { credentials } = require('./config');
 const cookieParser = require('cookie-parser')
 const expressSession = require('express-session')
 const csrf = require('csurf')
+const path = require('path');
+
 
 // application imports
 const indexRouter = require('./routes/index');
@@ -12,6 +14,7 @@ const adminRouter = require('./routes/admin');
 const filmsRouter = require('./routes/films');
 const analysesRouter = require('./routes/analyses');
 const termsRouter = require('./routes/terms');
+const analysisFindingsRouter = require('./routes/analysis_findings');
 
 //framework setup
 const app = express();
@@ -65,12 +68,16 @@ app.use((req, res, next) => {
   next();
 })
 
+// adding bootstrap
+app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')))
+
 //application setup
 app.use('/', indexRouter);
 app.use('/admin', adminRouter);
 app.use('/films', filmsRouter);
 app.use('/analyses', analysesRouter);
 app.use('/terms', termsRouter);
+app.use('/analysis_findings', analysisFindingsRouter);
 
 app.use((_req, res) => {
   res.status(404);
