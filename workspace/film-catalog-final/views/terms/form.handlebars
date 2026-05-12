@@ -1,0 +1,21 @@
+<h1>Term</h1>
+
+<form action="/terms/upsert" role="form" method="post">
+  <input type="hidden" name="_csrf" value="{{_csrfToken}}">
+  {{#if term}}
+  <div>
+    <h2>{{term.lexicalItem}}</h2>
+    <input type="hidden" name="id" value="{{term.id}}">
+  </div>
+  {{/if}}
+  
+  <div>
+    <label for="lexical_item">Lexical Item</label>
+    <input type="text" id="lexical_item" name="lexicalItem" {{#if term}}value="{{term.lexicalItem}}"{{/if}}>
+  </div>
+  <div>
+    <label for="definition">Definition</label>
+    <textarea rows="5" id="definition" name="definition">{{term.definition}}</textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

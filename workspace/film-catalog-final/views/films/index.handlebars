@@ -1,0 +1,16 @@
+<h1>Films</h1>
+{{#if currentUser}}
+  <a href="/films/form">Create a new film</a>
+{{/if}}
+
+<ul>
+  {{#each films}}
+    <li>
+      {{this.title}} ({{this.releaseYear}}) — {{this.director}} — Status: {{this.isAnalyzed}}
+      <a href="/films/show/{{this.id}}">view</a>
+      {{#if @root.currentUser}}
+        <a href="/films/edit?id={{this.id}}">edit</a>
+      {{/if}}
+    </li>
+  {{/each}}
+</ul>

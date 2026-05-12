@@ -1,0 +1,11 @@
+<h1>Analyses</h1>
+<a href="/analyses/form">Create a new analysis</a>
+
+<ul>
+  {{#each analyses}}
+    <li>{{this.id}} - {{this.filmId}} {{this.analysisDate}} {{this.notes}}
+      <a href="/analyses/show/{{this.id}}">view</a>
+      <a href="/analyses/edit?id={{this.id}}">edit</a>
+    </li>
+  {{/each}}
+</ul>
