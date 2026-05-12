@@ -1,0 +1,29 @@
+<h1>{{film.title}}</h1>
+<p>Directed by {{film.director}}</p>
+<p>Released in {{film.releaseYear}}</p>
+<p>{{film.description}}</p>
+<p>Analysis Status: {{film.isAnalyzed}}</p>
+
+{{#if currentUser}}
+  <a href="/films/edit?id={{film.id}}">Edit Film</a>
+  <a href="/analyses/form?filmId={{film.id}}">Add New Analysis</a>
+{{/if}}
+
+{{!-- this part has a link to direct users to full analysis --}}
+{{!-- and admin to the edit analysis form --}}
+<div>
+  <h2>Analyses</h2>
+  {{#each analyses}}
+    <div>
+      <p>
+        Date: {{this.analysisDate}}<br>
+        Notes: {{this.notes}}<br>
+        <a href="/analyses/show?id={{this.id}}">View Full Analysis</a>
+      </p>
+      {{!-- this only shows if i'm signed in and link goes to analysis edit form --}}
+      {{#if @root.currentUser}}
+        <a href="/analyses/edit?id={{this.id}}">Edit</a> 
+      {{/if}}
+    </div>
+  {{/each}}
+</div>
