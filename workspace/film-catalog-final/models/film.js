@@ -1,18 +1,5 @@
 const db = require('../database')
 
-exports.all = async () => {
-  const { rows } = await db.getPool().query("select * from films order by id");
-  return db.camelize(rows);
-};
-
-exports.upsert = async (film) => {
-  if (film.id) {
-    await exports.update(film);
-  } else {
-    await exports.add(film);
-  }
-}
-
 exports.add = async (film) => {
   await db.getPool().query("insert into films (title, release_year, director, description, is_analyzed) values ($1, $2, $3, $4, $5);",
     [film.title, film.releaseYear, film.director, film.description, film.isAnalyzed]);
@@ -26,3 +13,16 @@ exports.get = async (id) => {
   const { rows } = await db.getPool().query("select * from films where id = $1", [id])
   return db.camelize(rows)[0]
 }
+
+exports.upsert = async (film) => {
+  if (film.id) {
+    await exports.update(film);
+  } else {
+    await exports.add(film);
+  }
+}
+
+exports.all = async () => {
+  const { rows } = await db.getPool().query("select * from films order by id");
+  return db.camelize(rows);
+};

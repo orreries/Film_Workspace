@@ -1,0 +1,47 @@
+<h1>Analysis</h1>
+<h3>{{analysis.analysisDate}}</h3>
+<p>Notes: {{analysis.notes}}</p>
+<a href="/films/show/{{analysis.filmId}}">Back to Film</a>
+
+{{#if currentUser}}
+  <a href="/analyses/edit?id={{analysis.id}}">Edit Analysis</a>
+{{/if}}
+
+<div>
+  <h2>Findings</h2>
+  {{#if findings}}
+    <table>
+      <tr>
+        <th>Lexical Item</th>
+        <th>Definition</th>
+        <th>Frequency</th>
+        <th>Context Example</th>
+        <th>Notes</th>
+      </tr>
+{{#each findings}}
+  <tr>
+    <td>{{this.lexicalItem}}</td>
+    <td>{{this.definition}}</td>
+    <td>
+      {{#if @root.currentUser}}
+        <form action="/analysis_findings/upsert" method="post" role="form">
+          <input type="hidden" name="_csrf" value="{{@root._csrfToken}}">
+          <input type="hidden" name="id" value="{{this.id}}">
+          <input type="number" name="frequency" value="{{this.frequency}}" style="width:60px">
+          <input type="text" name="contextExample" value="{{this.contextExample}}" placeholder="context example">
+          <input type="text" name="notes" value="{{this.notes}}" placeholder="notes">
+          <button type="submit">Save</button>
+        </form>
+      {{else}}
+        {{this.frequency}}
+      {{/if}}
+    </td>
+    <td>{{#unless @root.currentUser}}{{this.contextExample}}{{/unless}}</td>
+    <td>{{#unless @root.currentUser}}{{this.notes}}{{/unless}}</td>
+  </tr>
+{{/each}}
+    </table>
+  {{else}}
+    <p>No findings recorded for this analysis yet.</p>
+  {{/if}}
+</div>

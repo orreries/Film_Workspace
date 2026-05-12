@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const Admin = require('../models/admin');
 
+// modeled after the users router but since there is only one admin (no registration) and no profile
+// only the login/logout are necessary
+// the admin registration is handled by adding it directly into the db once using a one-off query to save it
+
 router.get('/login', async (req, res, next) => {
   res.render('admin/login', { title: 'The Film Catalog || Login' });
 });

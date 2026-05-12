@@ -18,7 +18,7 @@
       <p>
         Date: {{this.analysisDate}}<br>
         Notes: {{this.notes}}<br>
-        <a href="/analyses/show?id={{this.id}}">View Full Analysis</a>
+        <a href="/analyses/show/{{this.id}}">View Full Analysis</a>
       </p>
       {{!-- this only shows if i'm signed in and link goes to analysis edit form --}}
       {{#if @root.currentUser}}

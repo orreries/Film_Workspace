@@ -1,0 +1,40 @@
+<form action="/analyses/upsert" role="form" method="post">
+  <input type="hidden" name="_csrf" value="{{_csrfToken}}">
+
+  {{#if analysis}}
+  <div>
+    <h2>Analysis form </h2>
+    <h4>{{analysis.analysisDate}}</h4>
+    <p>{{analysis.notes}}</p>
+    <input type="hidden" name="id" value="{{analysis.id}}">
+  </div>
+  {{/if}}
+
+  <input type="hidden" name="userId" value="{{currentUser.id}}">
+
+  <div>
+    <label for="film_id">Film</label>
+    <select id="film_id" name="filmId">
+      {{#each films}}
+        <option value="{{this.id}}" {{#if (eq @root.analysis.filmId this.id)}}selected{{/if}}>{{this.title}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <div>
+    <label for="analysis_date">Analysis Date</label>
+    <input type="date" id="analysis_date" name="analysisDate" {{#if analysis}}value="{{analysis.analysisDate}}"{{/if}}></div>
+  <div>
+    <label for="notes">Notes</label>
+    <textarea rows="5" id="notes" name="notes">{{analysis.notes}}</textarea>
+  </div>
+  <div>
+    <label for="terms">Terms Found</label>
+    <select id="terms" name="findingIds[]" multiple>
+    {{#each terms}}
+       <option value="{{this.id}}" {{#if (eq @root.analysis.findingIds this.id)}}selected{{/if}}>{{this.lexicalItem}}</option>
+    {{/each}}
+</select>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

@@ -1,3 +1,4 @@
+-- Active: 1778562436413@@127.0.0.1@5432@film_database
  drop database if exists film_database;
  create database film_database;
 
@@ -44,3 +45,6 @@ CREATE TABLE "analysis_findings" (
   "context_example" text,
   "notes" text
 );
+
+
+select * from analysis_findings;
